@@ -68,24 +68,48 @@ namespace EjaadTech.AVRonArduino
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-
             if (AVRonArduinoPackage.dte.Solution.Count > 0)
             {
                 EnvDTE.Project abc;
                 if (AVRonArduinoPackage.dte.Solution.Projects.Count > 0)
                 {
+                    EnvDTE.Project prj = AVRonArduinoPackage.dte.Solution.Projects.Item(1);
                     abc = AVRonArduinoPackage.dte.Solution.Projects.Item(1);
                     //comboBox1.Items.Add(abc.Name);
                     //comboBox1.Items.Add(abc.Properties.Count.ToString());
                     if (abc.Properties != null)
                     {
+                        
                         foreach (EnvDTE.Property prop in abc.Properties)
                         {
                             comboBox1.Items.Add(prop.Name);
                         }
+                        
+                        comboBox1.Items.Add(abc.Properties.Item("DeviceName").Value.ToString());
+                        prj.Properties.Item("DeviceName").Value = "atmega2560";
+                        EnvDTE.Configuration configuration = prj.ConfigurationManager.ActiveConfiguration;
+                        foreach (EnvDTE.Property prop in configuration.Properties)
+                        {
+                            comboBox1.Items.Add("CONFIG " + prop.Name);
+                        }
+                        configuration.Properties.Item("PostBuildEventCommand").Value = "Hello, World!";
+                        //AVRonArduinoPackage.dte.Solution.Projects.Item(1).Properties.Item("PostBuildEvent").Value = "Hello, World!";
+                        /* LINKS:
+                         * https://msdn.microsoft.com/en-us/library/ms228959.aspx
+                         * http://stackoverflow.com/questions/25020255/change-the-debug-properties-of-visual-studio-project-programmatically-by-envdte
+                         * https://msdn.microsoft.com/en-us/library/aa984055(v=vs.100).aspx
+                         * https://msdn.microsoft.com/en-us/library/aa983813(v=vs.100).aspx     but it actually is PostBuildEventCommand
+                         * 
+                          
+                         
+                         */
                     }
                 }
             }
+        }
+        void onBuildDoneEventHandler(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Build Event DONE");
         }
     }
 }

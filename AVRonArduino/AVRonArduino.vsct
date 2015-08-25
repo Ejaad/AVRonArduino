@@ -66,7 +66,7 @@
         <Icon guid="guidImages" id="bmpPic2" />
         <Strings>
           <CommandName>aoaConfig</CommandName>
-          <ButtonText>AVR on Arduino</ButtonText>
+          <ButtonText>AVR on Arduino B</ButtonText>
         </Strings>
       </Button>
 
