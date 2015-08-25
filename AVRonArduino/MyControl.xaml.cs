@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -12,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO.Ports;
-
+using System.Windows.Controls;
 
 namespace EjaadTech.AVRonArduino
 {
@@ -24,28 +23,14 @@ namespace EjaadTech.AVRonArduino
         public MyControl()
         {
             InitializeComponent();
+            InitializeBoardList();
         }
+
+        // ALL SERIAL PORT RELATED CODE is from SERIALPORTTERMINAL APP of Noah Coad - http://noahcoad.com
+        // http://coad.net/blog/resources/clickonce/SerialPortTerminal/publish.htm
+        // http://noahcoad.com/projects
 
         private SerialPort comport = new SerialPort();
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(string.Format(System.Globalization.CultureInfo.CurrentUICulture, "We are inside {0}.button1_Click() for UNO UNO UNO", this.ToString()),
-                            "AVR on Arduino");
-
-        }
-        private void button2_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(string.Format(System.Globalization.CultureInfo.CurrentUICulture, "We are inside {0}.button1_Click() for NANO", this.ToString()),
-                            "AVR on Arduino");
-
-        }
-        private void button3_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(string.Format(System.Globalization.CultureInfo.CurrentUICulture, "We are inside {0}.button1_Click() for MEGA", this.ToString()),
-                            "AVR on Arduino");
-        }
 
         private void bt_scan_Click(object sender, RoutedEventArgs e)
         {
@@ -71,6 +56,41 @@ namespace EjaadTech.AVRonArduino
             // Order the serial port names in numberic order (if possible)
             return SerialPort.GetPortNames().OrderBy(a => a.Length > 3 && int.TryParse(a.Substring(3), out num) ? num : 0).ToArray();
         }
+        private void InitializeBoardList() {
+            string[] boardList = { "Uno ATMega328p", "Nano ATMega328p", "Mega ATMega2560", "Leonardo" };
+            foreach (string boardName in boardList)
+            {
+                cbox_boardList.Items.Add(boardName);
+            }
+            cbox_boardList.SelectedIndex = 1;    // select the second item, Nano
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            EnvDTE.Project project;
+            if (AVRonArduinoPackage.dte.Solution.Projects.Count > 0)
+            {
+                project = AVRonArduinoPackage.dte.Solution.Projects.Item(0);
+                foreach (EnvDTE.Property property in project.Properties)
+                {
+                    cbox_propertyList.Items.Add(property.Name);
+                }
+            }
+            /*
+            DTE dte = (DTE)this. GetService(typeof(DTE));
+            //DTE dte = (DTE)this.GetService(typeof(DTE));
+            Projects projects = dte.Solution.Projects;
+
+            Project project = projects.Item(1);
+
+            foreach (Property property in project.Properties)
+            {
+                cbox_propertyList.Items.Add(new string[] { property.Name });
+            }
+             * */
+
+        }
+
     }
 
 }

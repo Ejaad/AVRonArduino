@@ -45,4 +45,5 @@ namespace EjaadTech.AVRonArduino
             base.Content = new MyControl();
         }
     }
+
 }

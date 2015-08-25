@@ -9,6 +9,9 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 
+using EnvDTE;
+
+
 namespace EjaadTech.AVRonArduino
 {
     /// <summary>
@@ -34,6 +37,8 @@ namespace EjaadTech.AVRonArduino
     [Guid(GuidList.guidAVRonArduinoPkgString)]
     public sealed class AVRonArduinoPackage : Package
     {
+        public static EnvDTE.DTE dte;
+
         /// <summary>
         /// Default constructor of the package.
         /// Inside this method you can place any initialization code that does not require 
