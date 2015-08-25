@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EnvDTE;
+
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
@@ -8,9 +10,6 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
-
-using EnvDTE;
-
 
 namespace EjaadTech.AVRonArduino
 {
@@ -38,7 +37,6 @@ namespace EjaadTech.AVRonArduino
     public sealed class AVRonArduinoPackage : Package
     {
         public static EnvDTE.DTE dte;
-
         /// <summary>
         /// Default constructor of the package.
         /// Inside this method you can place any initialization code that does not require 
@@ -58,6 +56,8 @@ namespace EjaadTech.AVRonArduino
         /// </summary>
         private void ShowToolWindow(object sender, EventArgs e)
         {
+            dte = (DTE)GetService(typeof(DTE));
+
             // Get the instance number 0 of this tool window. This window is single instance so this instance
             // is actually the only one.
             // The last flag is set to true so that if the tool window does not exists it will be created.

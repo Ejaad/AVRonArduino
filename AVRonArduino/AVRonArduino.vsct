@@ -6,7 +6,6 @@
         placement, ...), with each defining a specific set of properties.
         See the comment before each section for more details about how to
         use it. -->
-
   <!--  The VSCT compiler (the tool that translates this file into the binary 
         format that VisualStudio will consume) has the ability to run a preprocessor 
         on the vsct file; this preprocessor is (usually) the C++ preprocessor, so 
@@ -23,9 +22,6 @@
   <!--Definition of some VSCT specific constants. In this sample we use it for the IDs inside the guidOfficeIcon group. -->
   <Extern href="msobtnid.h"/>
 
-
-
-
   <!--The Commands section is where we the commands, menus and menu groups are defined.
       This section uses a Guid to identify the package that provides the command defined inside it. -->
   <Commands package="guidAVRonArduinoPkg">
@@ -37,20 +33,21 @@
     group; your package should define its own command set in order to avoid collisions  
     with command ids defined by other packages. -->
 
-    
     <!-- In this section you can define new menu groups. A menu group is a container for 
          other menus or buttons (commands); from a visual point of view you can see the 
          group as the part of a menu contained between two lines. The parent of a group 
          must be a menu. -->
+
     <Groups>
 
       <Group guid="guidAVRonArduinoCmdSet" id="MyMenuGroup" priority="0x0600">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
       </Group>
-      
+
 
 
     </Groups>
+    
     
     <!--Buttons section. -->
     <!--This section defines the elements the user can interact with, like a menu command or a button 
@@ -64,16 +61,6 @@
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node or set it to <Icon guid="guidOfficeIcon" id="msotcidNoIcon" /> -->
 
-      <Button guid="guidAVRonArduinoCmdSet" id="aoaUpload" priority="0x0100" type="Button">
-        <Parent guid="guidAVRonArduinoCmdSet" id="MyMenuGroup" />
-        <Icon guid="guidImages" id="bmpPic1" />
-        <Strings>
-          <CommandName>aoaUpload</CommandName>
-          <ButtonText>Upload to Arduino</ButtonText>
-        </Strings>
-      </Button>
-
-
       <Button guid="guidAVRonArduinoCmdSet" id="aoaConfig" priority="0x0100" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
         <Icon guid="guidImages" id="bmpPic2" />
@@ -85,6 +72,13 @@
 
 
     </Buttons>
+    <!--To define a menu group you have to specify its ID, the parent menu and its display priority. 
+          The command is visible and enabled by default. If you need to change the visibility, status, etc, you can use
+          the CommandFlag node.
+          You can add more than one CommandFlag node e.g.:
+              <CommandFlag>DefaultInvisible</CommandFlag>
+              <CommandFlag>DynamicVisibility</CommandFlag>
+          If you do not want an image next to your command, remove the Icon node or set it to <Icon guid="guidOfficeIcon" id="msotcidNoIcon" /> -->
    
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
     <Bitmaps>
@@ -99,24 +93,18 @@
  
   </Commands>
 
-
-
-
-
   <Symbols>
     <!-- This is the package guid. -->
     <GuidSymbol name="guidAVRonArduinoPkg" value="{ae02b4e0-a1e6-428b-8369-cee04478ffa5}" />
     
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidAVRonArduinoCmdSet" value="{23ad2712-ced6-4150-a57f-470040b42a95}">
-
       <IDSymbol name="MyMenuGroup" value="0x1020" />
       <IDSymbol name="aoaUpload" value="0x0100" />
       <IDSymbol name="aoaConfig" value="0x0101" />
+
     </GuidSymbol>
-    
-    
-    
+        
     <GuidSymbol name="guidImages" value="{938554d5-7ddb-40d6-8720-1163d2452be5}" >
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
