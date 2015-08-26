@@ -31,7 +31,10 @@ namespace EjaadTech.AVRonArduino
         // http://noahcoad.com/projects
 
         private SerialPort comport = new SerialPort();
-        private string[] boardList = { "Uno ATMega328p", "Nano ATMega328p", "Mega ATMega2560" };
+        private string[] boardList =            { "Uno ATMega328p",  "Nano ATMega328p", "Mega ATMega2560" };
+        private string[] boardDeviceList =      { "atmega328p",      "atmega328p",      "atmega2560" };
+        private string[] boardBaudList =        { "115200",          "57600",           "115200" };
+        private string[] boardProgrammerList =  { "arduino",         "arduino",         "wiring" };
 
         private void bt_scan_Click(object sender, RoutedEventArgs e)
         {
@@ -59,11 +62,12 @@ namespace EjaadTech.AVRonArduino
         }
         private void InitializeBoardList()
         {
+            cbox_boardList.Items.Add("Select Arduino board:");
             foreach (string boardName in boardList)
             {
                 cbox_boardList.Items.Add(boardName);
             }
-            cbox_boardList.SelectedIndex = 1;    // select the second item, Nano
+            cbox_boardList.SelectedIndex = 0;    // select the second item, Nano
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -88,31 +92,15 @@ namespace EjaadTech.AVRonArduino
                     if (project.Properties != null)
                     {
                         EnvDTE.Configuration configuration = project.ConfigurationManager.ActiveConfiguration;
-                        string postBuild = "", avrdudeAddress = "here it is", hexFileName = "testHexFile.hex";
-
-                        if (cbox_boardList.SelectedItem.ToString() == boardList[0])
+                        string postBuild = "", avrdudeAddress = "here it is", comPort = cbox_portList.SelectedItem.ToString();
+                        int i = cbox_boardList.SelectedIndex - 1;
+                        if (i > 0)
                         {
-                            // UNO 328
-                            project.Properties.Item("DeviceName").Value = "atmega328p";
-                            postBuild = avrdudeAddress + "avrdude -C avrdude.conf -v -p atmega328p -c arduino -P " + cbox_portList.SelectedItem.ToString() +
-                                        " -b 115200 -D -U flash:w:" + hexFileName + ":i";
+                            project.Properties.Item("DeviceName").Value = boardDeviceList[i];
+                            postBuild = avrdudeAddress + "avrdude -v -p " + boardDeviceList[i] + " -c " + boardProgrammerList[i] + " -P " + comPort + " -b " + boardBaudList[i] + " -D -U flash:w:$(AssemblyName):i";
+                            //$(AssemblyName) is Atmel Studio MACRO
+                            configuration.Properties.Item("PostBuildEventCommand").Value = postBuild;
                         }
-                        else if (cbox_boardList.SelectedItem.ToString() == boardList[1])
-                        {
-                            // Nano 328
-                            project.Properties.Item("DeviceName").Value = "atmega328p";
-                            postBuild = avrdudeAddress + "avrdude -C avrdude.conf -v -p atmega328p -c arduino -P " + cbox_portList.SelectedItem.ToString() +
-                                        " -b 57600 -D -U flash:w:" + hexFileName + ":i";
-                        }
-                        else if (cbox_boardList.SelectedItem.ToString() == boardList[2])
-                        {
-                            // Mega 2560
-                            project.Properties.Item("DeviceName").Value = "atmega2560";
-                            postBuild = avrdudeAddress + "avrdude -C avrdude.conf -v -p atmega2560 -c wiring -P " + cbox_portList.SelectedItem.ToString() +
-                                        " -b 115200 -D -U flash:w:" + hexFileName + ":i";
-                        }
-                        configuration.Properties.Item("PostBuildEventCommand").Value = postBuild;
-
                         // COMMANDS FROM ARDUINO
                         // ORG:  C:\Program Files (x86)\Arduino\hardware\tools\avr/bin/avrdude -CC:\Program Files (x86)\Arduino\hardware\tools\avr/etc/avrdude.conf -v -patmega328p -carduino -PCOM1 -b115200 -D -Uflash:w:C:\Users\zaid\AppData\Local\Temp\build7239693675212912702.tmp/sketch_aug26a.cpp.hex:i 
                         // UNO:  avrdude -C avrdude.conf -v -p atmega328p -c arduino -P COM1 -b 115200 -D -U flash:w:sketch_aug26a.cpp.hex:i 
