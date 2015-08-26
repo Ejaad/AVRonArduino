@@ -17,9 +17,9 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Margin="5 5" Text="Board" Height="20"></TextBlock>
-                <ComboBox  Margin="5 5" Height="23" Name="cbox_boardList" Width="172" Text=""></ComboBox>
+                <ComboBox  Margin="5 5" Height="23" Name="cbox_boardList" Width="172" Text="" SelectionChanged="cbox_boardList_SelectionChanged"></ComboBox>
             </StackPanel>
-            <Button Content="Button" Height="23" Name="button1" Width="66" Click="button1_Click" />
+            <Button Content="TEST BUTTON" Height="23" Name="button1" Width="66" Click="button1_Click" />
             <ComboBox Height="23" Name="comboBox1" Text="" Width="172" />
         </StackPanel>
     </Grid>

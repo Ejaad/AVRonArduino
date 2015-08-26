@@ -58,7 +58,7 @@ namespace EjaadTech.AVRonArduino
         }
         private void InitializeBoardList()
         {
-            string[] boardList = { "Uno ATMega328p", "Nano ATMega328p", "Mega ATMega2560", "Leonardo" };
+            string[] boardList = { "Uno ATMega328p", "Nano ATMega328p", "Mega ATMega2560" };
             foreach (string boardName in boardList)
             {
                 cbox_boardList.Items.Add(boardName);
@@ -68,48 +68,50 @@ namespace EjaadTech.AVRonArduino
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
+        }
+        void onBuildDoneEventHandler(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Build Event DONE");
+        }
+
+        private void cbox_boardList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // check if any solution is OPEN
             if (AVRonArduinoPackage.dte.Solution.Count > 0)
             {
-                EnvDTE.Project abc;
+                // check if any project is OPEN and GET it
+                EnvDTE.Project project;
                 if (AVRonArduinoPackage.dte.Solution.Projects.Count > 0)
                 {
-                    EnvDTE.Project prj = AVRonArduinoPackage.dte.Solution.Projects.Item(1);
-                    abc = AVRonArduinoPackage.dte.Solution.Projects.Item(1);
-                    //comboBox1.Items.Add(abc.Name);
-                    //comboBox1.Items.Add(abc.Properties.Count.ToString());
-                    if (abc.Properties != null)
+                    project = AVRonArduinoPackage.dte.Solution.Projects.Item(1);
+                    // not sure why first project is at 1 and not at 0
+                    if (project.Properties != null)
                     {
-                        
-                        foreach (EnvDTE.Property prop in abc.Properties)
+                        // change the deviceName property if the project has it
+                        if (project.Properties.Item("DeviceName").Value != null)
                         {
-                            comboBox1.Items.Add(prop.Name);
+                            project.Properties.Item("DeviceName").Value = "atmega2560";
                         }
-                        
-                        comboBox1.Items.Add(abc.Properties.Item("DeviceName").Value.ToString());
-                        prj.Properties.Item("DeviceName").Value = "atmega2560";
-                        EnvDTE.Configuration configuration = prj.ConfigurationManager.ActiveConfiguration;
-                        foreach (EnvDTE.Property prop in configuration.Properties)
-                        {
-                            comboBox1.Items.Add("CONFIG " + prop.Name);
-                        }
+                        // get project configurations, where the PostBuild command lies
+                        // assuming it is always there!
+                        EnvDTE.Configuration configuration = project.ConfigurationManager.ActiveConfiguration;
                         configuration.Properties.Item("PostBuildEventCommand").Value = "Hello, World!";
-                        //AVRonArduinoPackage.dte.Solution.Projects.Item(1).Properties.Item("PostBuildEvent").Value = "Hello, World!";
+
+                        // COMMANDS FROM ARDUINO
+                        // ORG:  C:\Program Files (x86)\Arduino\hardware\tools\avr/bin/avrdude -CC:\Program Files (x86)\Arduino\hardware\tools\avr/etc/avrdude.conf -v -patmega328p -carduino -PCOM1 -b115200 -D -Uflash:w:C:\Users\zaid\AppData\Local\Temp\build7239693675212912702.tmp/sketch_aug26a.cpp.hex:i 
+                        // UNO:  avrdude -C avrdude.conf -v -p atmega328p -c arduino -P COM1 -b 115200 -D -U flash:w:sketch_aug26a.cpp.hex:i 
+                        // NANO: avrdude -C avrdude.conf -v -p atmega328p -c arduino -P COM1 -b 57600  -D -U flash:w:sketch_aug26a.cpp.hex:i 
+                        // MEGA: avrdude -C avrdude.conf -v -p atmega2560 -c wiring  -P COM1 -b 115200 -D -U flash:w:sketch_aug26a.cpp.hex:i                        // LENO: ????
+
                         /* LINKS:
                          * https://msdn.microsoft.com/en-us/library/ms228959.aspx
                          * http://stackoverflow.com/questions/25020255/change-the-debug-properties-of-visual-studio-project-programmatically-by-envdte
                          * https://msdn.microsoft.com/en-us/library/aa984055(v=vs.100).aspx
                          * https://msdn.microsoft.com/en-us/library/aa983813(v=vs.100).aspx     but it actually is PostBuildEventCommand
-                         * 
-                          
-                         
                          */
                     }
                 }
             }
-        }
-        void onBuildDoneEventHandler(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Build Event DONE");
         }
     }
 }
