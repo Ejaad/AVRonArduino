@@ -31,6 +31,7 @@ namespace EjaadTech.AVRonArduino
         // http://noahcoad.com/projects
 
         private SerialPort comport = new SerialPort();
+        private string[] boardList = { "Uno ATMega328p", "Nano ATMega328p", "Mega ATMega2560" };
 
         private void bt_scan_Click(object sender, RoutedEventArgs e)
         {
@@ -58,7 +59,6 @@ namespace EjaadTech.AVRonArduino
         }
         private void InitializeBoardList()
         {
-            string[] boardList = { "Uno ATMega328p", "Nano ATMega328p", "Mega ATMega2560" };
             foreach (string boardName in boardList)
             {
                 cbox_boardList.Items.Add(boardName);
@@ -87,15 +87,31 @@ namespace EjaadTech.AVRonArduino
                     // not sure why first project is at 1 and not at 0
                     if (project.Properties != null)
                     {
-                        // change the deviceName property if the project has it
-                        if (project.Properties.Item("DeviceName").Value != null)
-                        {
-                            project.Properties.Item("DeviceName").Value = "atmega2560";
-                        }
-                        // get project configurations, where the PostBuild command lies
-                        // assuming it is always there!
                         EnvDTE.Configuration configuration = project.ConfigurationManager.ActiveConfiguration;
-                        configuration.Properties.Item("PostBuildEventCommand").Value = "Hello, World!";
+                        string postBuild = "", avrdudeAddress = "here it is", hexFileName = "testHexFile.hex";
+
+                        if (cbox_boardList.SelectedItem.ToString() == boardList[0])
+                        {
+                            // UNO 328
+                            project.Properties.Item("DeviceName").Value = "atmega328p";
+                            postBuild = avrdudeAddress + "avrdude -C avrdude.conf -v -p atmega328p -c arduino -P " + cbox_portList.SelectedItem.ToString() +
+                                        " -b 115200 -D -U flash:w:" + hexFileName + ":i";
+                        }
+                        else if (cbox_boardList.SelectedItem.ToString() == boardList[1])
+                        {
+                            // Nano 328
+                            project.Properties.Item("DeviceName").Value = "atmega328p";
+                            postBuild = avrdudeAddress + "avrdude -C avrdude.conf -v -p atmega328p -c arduino -P " + cbox_portList.SelectedItem.ToString() +
+                                        " -b 57600 -D -U flash:w:" + hexFileName + ":i";
+                        }
+                        else if (cbox_boardList.SelectedItem.ToString() == boardList[2])
+                        {
+                            // Mega 2560
+                            project.Properties.Item("DeviceName").Value = "atmega2560";
+                            postBuild = avrdudeAddress + "avrdude -C avrdude.conf -v -p atmega2560 -c wiring -P " + cbox_portList.SelectedItem.ToString() +
+                                        " -b 115200 -D -U flash:w:" + hexFileName + ":i";
+                        }
+                        configuration.Properties.Item("PostBuildEventCommand").Value = postBuild;
 
                         // COMMANDS FROM ARDUINO
                         // ORG:  C:\Program Files (x86)\Arduino\hardware\tools\avr/bin/avrdude -CC:\Program Files (x86)\Arduino\hardware\tools\avr/etc/avrdude.conf -v -patmega328p -carduino -PCOM1 -b115200 -D -Uflash:w:C:\Users\zaid\AppData\Local\Temp\build7239693675212912702.tmp/sketch_aug26a.cpp.hex:i 
