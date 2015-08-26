@@ -60,6 +60,7 @@ namespace EjaadTech.AVRonArduino
             // Order the serial port names in numberic order (if possible)
             return SerialPort.GetPortNames().OrderBy(a => a.Length > 3 && int.TryParse(a.Substring(3), out num) ? num : 0).ToArray();
         }
+
         private void InitializeBoardList()
         {
             cbox_boardList.Items.Add("Select Arduino board:");
@@ -70,9 +71,6 @@ namespace EjaadTech.AVRonArduino
             cbox_boardList.SelectedIndex = 0;    // select the second item, Nano
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-        }
         void onBuildDoneEventHandler(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Build Event DONE");
@@ -92,12 +90,13 @@ namespace EjaadTech.AVRonArduino
                     if (project.Properties != null)
                     {
                         EnvDTE.Configuration configuration = project.ConfigurationManager.ActiveConfiguration;
-                        string postBuild = "", avrdudeAddress = "here it is", comPort = cbox_portList.SelectedItem.ToString();
+                        string postBuild = "", comPort = cbox_portList.SelectedItem.ToString();
+                        string avrdudeAddress = AVRonArduinoPackage.path2 + "\\Extensions\\AVRonArduino\\avrdude\\";
                         int i = cbox_boardList.SelectedIndex - 1;
                         if (i > 0)
                         {
                             project.Properties.Item("DeviceName").Value = boardDeviceList[i];
-                            postBuild = avrdudeAddress + "avrdude -v -p " + boardDeviceList[i] + " -c " + boardProgrammerList[i] + " -P " + comPort + " -b " + boardBaudList[i] + " -D -U flash:w:$(AssemblyName):i";
+                            postBuild = avrdudeAddress + "avrdude -v -p " + boardDeviceList[i] + " -c " + boardProgrammerList[i] + " -P " + comPort + " -b " + boardBaudList[i] + " -D -U flash:w:$(AssemblyName).hex:i";
                             //$(AssemblyName) is Atmel Studio MACRO
                             configuration.Properties.Item("PostBuildEventCommand").Value = postBuild;
                         }
@@ -116,6 +115,11 @@ namespace EjaadTech.AVRonArduino
                     }
                 }
             }
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            label1.Content = AVRonArduinoPackage.path2;
         }
     }
 }

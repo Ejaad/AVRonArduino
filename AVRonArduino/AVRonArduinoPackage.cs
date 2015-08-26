@@ -37,6 +37,7 @@ namespace EjaadTech.AVRonArduino
     public sealed class AVRonArduinoPackage : Package
     {
         public static EnvDTE.DTE dte;
+        public static string path2;
         /// <summary>
         /// Default constructor of the package.
         /// Inside this method you can place any initialization code that does not require 
@@ -57,6 +58,7 @@ namespace EjaadTech.AVRonArduino
         private void ShowToolWindow(object sender, EventArgs e)
         {
             dte = (DTE)GetService(typeof(DTE));
+            path2 = this.UserLocalDataPath;
 
             // Get the instance number 0 of this tool window. This window is single instance so this instance
             // is actually the only one.
