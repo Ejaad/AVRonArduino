@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
+  <Identifier Id="AVRonArduinoInstaller.Microsoft.c0ea8e56-37c3-4c9b-82cc-7e0083cf17ae">
+    <Name>AVRonArduinoInstaller</Name>
+    <Author>EjaadTech</Author>
+    <Version>0.42</Version>
+    <Description xml:space="preserve">AVR on Arduino, a simple plugin to make single click upload to Arduino boards possible from within Atmel Studio with standard AVR C/C++ code.</Description>
+    <Locale>1033</Locale>
+    <MoreInfoUrl>http://ejaad.com.pk/avronarduino</MoreInfoUrl>
+    <GettingStartedGuide>http://ejaad.com.pk/avronarduino</GettingStartedGuide>
+    <SupportedProducts>
+      <IsolatedShell Version="6.2">AtmelStudio</IsolatedShell>
+      <IsolatedShell Version="6.1">AtmelStudio</IsolatedShell>
+    </SupportedProducts>
+    <SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="4.0" />
+  </Identifier>
+  <References />
+  <Content>
+    <VsPackage>|AVRonArduino;PkgdefProjectOutputGroup|</VsPackage>
+  </Content>
+</Vsix>
