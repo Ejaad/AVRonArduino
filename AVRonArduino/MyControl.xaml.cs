@@ -90,7 +90,9 @@ namespace EjaadTech.AVRonArduino
                     if (project.Properties != null)
                     {
                         EnvDTE.Configuration configuration = project.ConfigurationManager.ActiveConfiguration;
-                        string postBuild = "", comPort = cbox_portList.SelectedItem.ToString();
+                        string postBuild = "", comPort = "";
+                        if (cbox_portList.SelectedIndex != -1 && cbox_portList.Items.Count > 0)
+                            comPort = cbox_portList.SelectedItem.ToString();
                         string avrdudeAddress = AVRonArduinoPackage.path2 + "\\Extensions\\AVRonArduino\\avrdude\\";
                         int i = cbox_boardList.SelectedIndex - 1;
                         if (i > 0)
@@ -115,11 +117,6 @@ namespace EjaadTech.AVRonArduino
                     }
                 }
             }
-        }
-
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            label1.Content = AVRonArduinoPackage.path2;
         }
     }
 }
