@@ -23,7 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CopyVsixExtensionFiles>True</CopyVsixExtensionFiles>
-    <CopyVsixExtensionLocation>C:\Users\zaid\AppData\Local\Atmel\AtmelStudio\6.2\Extensions\AVRonArduino</CopyVsixExtensionLocation>
+    <CopyVsixExtensionLocation>C:\Users\zaid\AppData\Local\Atmel\AtmelStudio\6.2\Extensions\ppcbrztr.e02</CopyVsixExtensionLocation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

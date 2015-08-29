@@ -63,7 +63,8 @@ namespace EjaadTech.AVRonArduino
 
         private void InitializeBoardList()
         {
-            cbox_boardList.Items.Add("Select Arduino board:");
+            cbox_portList.Items.Add("COMx");
+            cbox_boardList.Items.Add("Select Arduino");
             foreach (string boardName in boardList)
             {
                 cbox_boardList.Items.Add(boardName);
@@ -117,6 +118,11 @@ namespace EjaadTech.AVRonArduino
                     }
                 }
             }
+        }
+
+        private void cbox_portList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

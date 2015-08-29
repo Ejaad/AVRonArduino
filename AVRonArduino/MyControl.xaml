@@ -5,20 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vsfx="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.10.0"
              mc:Ignorable="d" 
-             d:DesignHeight="75" d:DesignWidth="222"
+             d:DesignHeight="44" d:DesignWidth="222"
              Name="MyToolWindow" FontSize="14">
              <!-- Background="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowBackgroundKey}}" -->
     <Grid>
-        <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Margin="5 5" Text="COM Port" Height="20"></TextBlock>
-                <Button Margin="5 5" Content="SCAN" Name="bt_scan" Width="42" Click="bt_scan_Click" />
-                <ComboBox  Margin="5 5" Height="23" Name="cbox_portList" Width="98" Text=""></ComboBox>
+            <ComboBox Margin="0 0" Height="30" Width="118" Name="cbox_boardList" Text="" SelectionChanged="cbox_boardList_SelectionChanged"></ComboBox>
+            <ComboBox Margin="3 0" Height="30" Width="68"  Name="cbox_portList"  Text="" SelectionChanged="cbox_portList_SelectionChanged"></ComboBox>
+            <Button   Margin="0 0" Height="27" Width="25"  Name="bt_scan"        Content="↺" Click="bt_scan_Click" FontFamily="Cambria Math" FontSize="20" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Margin="5 5" Text="Board" Height="20"></TextBlock>
-                <ComboBox  Margin="5 5" Height="30" Name="cbox_boardList" Width="171" Text="" SelectionChanged="cbox_boardList_SelectionChanged"></ComboBox>
-            </StackPanel>
-        </StackPanel>
     </Grid>
 </UserControl>
