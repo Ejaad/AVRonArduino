@@ -113,7 +113,8 @@ namespace EjaadTech.AVRonArduino
                          * https://msdn.microsoft.com/en-us/library/ms228959.aspx
                          * http://stackoverflow.com/questions/25020255/change-the-debug-properties-of-visual-studio-project-programmatically-by-envdte
                          * https://msdn.microsoft.com/en-us/library/aa984055(v=vs.100).aspx
-                         * https://msdn.microsoft.com/en-us/library/aa983813(v=vs.100).aspx     but it actually is PostBuildEventCommand
+                         * https://msdn.microsoft.com/en-us/library/aa983813(v=vs.100).aspx
+                         * but it actually is PostBuildEventCommand
                          */
                     }
                 }
@@ -122,7 +123,6 @@ namespace EjaadTech.AVRonArduino
 
         private void cbox_portList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
     }
 }

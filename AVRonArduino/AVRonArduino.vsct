@@ -37,15 +37,12 @@
          other menus or buttons (commands); from a visual point of view you can see the 
          group as the part of a menu contained between two lines. The parent of a group 
          must be a menu. -->
+    
 
     <Groups>
-
       <Group guid="guidAVRonArduinoCmdSet" id="MyMenuGroup" priority="0x0600">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
       </Group>
-
-
-
     </Groups>
     
     
@@ -66,11 +63,9 @@
         <Icon guid="guidImages" id="bmpPic2" />
         <Strings>
           <CommandName>aoaConfig</CommandName>
-          <ButtonText>AVR on Arduino B</ButtonText>
+          <ButtonText>AVR on Arduino CONFIG</ButtonText>
         </Strings>
       </Button>
-
-
     </Buttons>
     <!--To define a menu group you have to specify its ID, the parent menu and its display priority. 
           The command is visible and enabled by default. If you need to change the visibility, status, etc, you can use
@@ -100,9 +95,7 @@
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidAVRonArduinoCmdSet" value="{23ad2712-ced6-4150-a57f-470040b42a95}">
       <IDSymbol name="MyMenuGroup" value="0x1020" />
-      <IDSymbol name="aoaUpload" value="0x0100" />
       <IDSymbol name="aoaConfig" value="0x0101" />
-
     </GuidSymbol>
         
     <GuidSymbol name="guidImages" value="{938554d5-7ddb-40d6-8720-1163d2452be5}" >
